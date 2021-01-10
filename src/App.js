@@ -36,15 +36,17 @@ function App() {
   }, []);
 
   useEffect(() => {
+    setSearchError('');
+
     if (!searchParam) {
+      setResults([]);
       return;
     }
+
     const url = new URL('http://www.omdbapi.com/');
     url.searchParams.append('apikey', process.env.REACT_APP_OMDB_API_KEY);
     url.searchParams.append('type', 'movie');
     url.searchParams.append('s', searchParam.trim());
-
-    setSearchError('');
 
     fetch(url)
       .then((response) => response.json())
@@ -72,7 +74,7 @@ function App() {
         <h1>The Shoppies</h1>
       </header>
       <main>
-        <Search setSearchParam={debounce(setSearchParam, 300)}></Search>
+        <Search setSearchParam={debounce(setSearchParam, 500)}></Search>
 
         {successBanner}
 
