@@ -40,7 +40,7 @@ function App() {
       return;
     }
     const url = new URL('http://www.omdbapi.com/');
-    url.searchParams.append('apikey', '98dfdc18');
+    url.searchParams.append('apikey', process.env.REACT_APP_OMDB_API_KEY);
     url.searchParams.append('type', 'movie');
     url.searchParams.append('s', searchParam.trim());
 
