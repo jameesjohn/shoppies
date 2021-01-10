@@ -4,6 +4,7 @@ import SearchResults from './SearchResults';
 import Nominations from './Nominations';
 import SearchError from './SearchError';
 import { useEffect, useState } from 'react';
+import { storeNomination, getAllNominations, deleteNomination } from './IDBApi';
 
 /**
  *
@@ -29,6 +30,10 @@ function App() {
   const [results, setResults] = useState([]);
   const [searchError, setSearchError] = useState('');
   const [nominations, setNominations] = useState([]);
+
+  useEffect(() => {
+    getAllNominations().then((nominations) => setNominations(nominations));
+  }, []);
 
   useEffect(() => {
     if (!searchParam) {
@@ -84,6 +89,7 @@ function App() {
             addNomination={(nomination) => {
               nominations.push(nomination);
               setNominations([...nominations]);
+              storeNomination(nomination);
             }}
           ></SearchResults>
         )}
@@ -95,6 +101,7 @@ function App() {
               (item) => item !== nomination
             );
             setNominations([...remainingNominations]);
+            deleteNomination(nomination);
           }}
         ></Nominations>
       </main>
