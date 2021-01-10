@@ -1,0 +1,14 @@
+.Search {
+  grid-column: span 2;
+  display: flex;
+  flex-direction: column;
+}
+
+.Search input {
+  height: 30px;
+  padding: 5px 10px;
+}
+
+.Search label {
+  margin-bottom: 10px;
+}

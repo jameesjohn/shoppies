@@ -11,3 +11,45 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.box {
+  background-color: #ffffff;
+  border-radius: 5px;
+  box-shadow: 0 0 5px #cccccc;
+  padding: 20px;
+
+  align-self: flex-start;
+}
+
+.movieList {
+  list-style-type: none;
+  padding: 0;
+  overflow: auto;
+  max-height: 450px;
+  display: flex;
+  flex-direction: column;
+}
+
+.movieList li {
+  background-color: #ffffff;
+  border-radius: 5px;
+  box-shadow: 0 0 5px #cccccc;
+  padding: 20px;
+  margin-top: 20px;
+  width: 80%;
+  align-self: center;
+
+  display: flex;
+  gap: 5px;
+  flex-direction: column;
+}
+
+.movieList li:last-of-type {
+  margin-bottom: 20px;
+}
+
+.movieList .nominate {
+  margin-top: 10px;
+  padding: 5px;
+  box-shadow: 0 0 5px #cccccc;
+}
