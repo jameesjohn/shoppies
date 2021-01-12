@@ -29,6 +29,7 @@ function App() {
   const [searchParam, setSearchParam] = useState('');
   const [results, setResults] = useState([]);
   const [searchError, setSearchError] = useState('');
+  const [searching, setSearching] = useState(false);
   const [nominations, setNominations] = useState([]);
 
   useEffect(() => {
@@ -37,9 +38,9 @@ function App() {
 
   useEffect(() => {
     setSearchError('');
+    setResults([]);
 
     if (!searchParam) {
-      setResults([]);
       return;
     }
 
@@ -47,15 +48,26 @@ function App() {
     url.searchParams.append('apikey', process.env.REACT_APP_OMDB_API_KEY);
     url.searchParams.append('type', 'movie');
     url.searchParams.append('s', searchParam.trim());
-
+    setSearching(true);
     fetch(url)
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw Error('Unable to complete request.');
+      })
       .then((response) => {
         if (response.Response === 'True') {
           setResults(response.Search);
         } else {
           setSearchError(response.Error);
         }
+      })
+      .catch((error) => {
+        setSearchError(error.message);
+      })
+      .finally(() => {
+        setSearching(false);
       });
   }, [searchParam]);
 
@@ -74,7 +86,7 @@ function App() {
         <h1>The Shoppies</h1>
       </header>
       <main>
-        <Search setSearchParam={debounce(setSearchParam, 500)}></Search>
+        <Search setSearchParam={debounce(setSearchParam, 250)}></Search>
 
         {successBanner}
 
@@ -88,6 +100,7 @@ function App() {
             searchParam={searchParam}
             results={results}
             nominations={nominations}
+            searching={searching}
             addNomination={(nomination) => {
               nominations.push(nomination);
               setNominations([...nominations]);

@@ -1,14 +1,26 @@
+import Loader from './Loader';
 import './SearchResults.css';
 
-function SearchResults({ searchParam, results, nominations, addNomination }) {
+function SearchResults({
+  searchParam,
+  results,
+  nominations,
+  searching,
+  addNomination,
+}) {
+  let heading = <p>Start typing to search for movies...</p>;
+  let loader = '';
+  if (searching) {
+    heading = <h4>Fetching results for "{searchParam}"...</h4>;
+    loader = <Loader></Loader>;
+  } else if (searchParam) {
+    heading = <h4>Showing results for "{searchParam}"</h4>;
+  }
+
   return (
     <div className="SearchResult box">
-      {searchParam ? (
-        <h4>Showing results for "{searchParam}"</h4>
-      ) : (
-        <p>Start typing to search for movies...</p>
-      )}
-
+      {heading}
+      {loader}
       <ul className="movieList">
         {results.map((result) => (
           <li key={result.imdbID}>
