@@ -1,30 +1,34 @@
+import MovieList from './MovieList';
+
+function getPoster(nomination) {
+  const defaultPoster =
+    'https://img.icons8.com/carbon-copy/200/000000/no-image.png';
+
+  if (nomination.Poster === 'N/A') {
+    return `url(${defaultPoster})`;
+  }
+  return `url(${nomination.Poster})`;
+}
 function Nominations({ nominations, removeNomination }) {
-  let emptyNomination;
+  let nominationMessage;
   if (nominations.length === 0) {
-    emptyNomination = <p>You are yet to make any nomination.</p>;
+    nominationMessage = <p>You are yet to make any nomination.</p>;
+  } else {
+    nominationMessage = (
+      <p>Nominations are stored after you've left the page.</p>
+    );
   }
   return (
     <div className="box">
       <h4>Nominations</h4>
-      {emptyNomination}
-      <ul className="movieList">
-        {nominations.map((nomination) => (
-          <li key={nomination.imdbID}>
-            <span className="title">
-              <strong>Title</strong>: {nomination.Title}
-            </span>
-            <span>
-              <strong>Year Released</strong>: {nomination.Year}
-            </span>
-            <button
-              className="nominate"
-              onClick={(e) => removeNomination(nomination)}
-            >
-              Remove Nomination
-            </button>
-          </li>
-        ))}
-      </ul>
+      {nominationMessage}
+      <MovieList
+        movies={nominations}
+        btnAction={removeNomination}
+        btnClass="remove"
+        btnText="Remove Nomination"
+        // btnStyle={{ }}
+      />
     </div>
   );
 }

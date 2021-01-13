@@ -86,7 +86,7 @@ function App() {
         <h1>The Shoppies</h1>
       </header>
       <main>
-        <Search setSearchParam={debounce(setSearchParam, 250)}></Search>
+        <Search setSearchParam={debounce(setSearchParam, 300)}></Search>
 
         {successBanner}
 

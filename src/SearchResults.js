@@ -1,4 +1,5 @@
 import Loader from './Loader';
+import MovieList from './MovieList';
 import './SearchResults.css';
 
 function SearchResults({
@@ -21,27 +22,15 @@ function SearchResults({
     <div className="SearchResult box">
       {heading}
       {loader}
-      <ul className="movieList">
-        {results.map((result) => (
-          <li key={result.imdbID}>
-            <span className="title">
-              <strong>Title</strong>: {result.Title}
-            </span>
-            <span>
-              <strong>Year Released</strong>: {result.Year}
-            </span>
-            <button
-              className="nominate"
-              disabled={nominations.find(
-                (nomination) => nomination.imdbID === result.imdbID
-              )}
-              onClick={(e) => addNomination(result)}
-            >
-              Nominate
-            </button>
-          </li>
-        ))}
-      </ul>
+      <MovieList
+        movies={results}
+        btnAction={addNomination}
+        btnText="Nominate"
+        btnClass="nominate"
+        btnDisabled={(movie) =>
+          nominations.some((nomination) => nomination.imdbID === movie.imdbID)
+        }
+      />
     </div>
   );
 }

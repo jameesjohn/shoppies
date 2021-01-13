@@ -10,6 +10,7 @@ function Search({ setSearchParam }) {
         onInput={(e) => {
           setSearchParam(e.target.value);
         }}
+        autoFocus
       />
     </div>
   );
