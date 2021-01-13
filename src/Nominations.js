@@ -1,14 +1,5 @@
 import MovieList from './MovieList';
 
-function getPoster(nomination) {
-  const defaultPoster =
-    'https://img.icons8.com/carbon-copy/200/000000/no-image.png';
-
-  if (nomination.Poster === 'N/A') {
-    return `url(${defaultPoster})`;
-  }
-  return `url(${nomination.Poster})`;
-}
 function Nominations({ nominations, removeNomination }) {
   let nominationMessage;
   if (nominations.length === 0) {
