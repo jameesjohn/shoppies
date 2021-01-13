@@ -28,6 +28,7 @@ function SearchResults({
         btnText="Nominate"
         btnClass="nominate"
         btnDisabled={(movie) =>
+          nominations.length > 4 ||
           nominations.some((nomination) => nomination.imdbID === movie.imdbID)
         }
       />
