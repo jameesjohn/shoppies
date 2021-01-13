@@ -22,3 +22,10 @@
   margin: 0;
   grid-column: span 2;
 }
+
+@media screen and (max-width: 480px) {
+  .App main {
+    display: flex;
+    flex-direction: column;
+  }
+}
