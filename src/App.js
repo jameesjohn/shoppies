@@ -86,6 +86,13 @@ function App() {
         <h1>The Shoppies</h1>
       </header>
       <main>
+        <a
+          target="_blank"
+          rel="noreferrer"
+          href="https://github.com/jameesjohn/shoppies"
+        >
+          Link to Source Code
+        </a>
         <Search setSearchParam={debounce(setSearchParam, 300)}></Search>
 
         {successBanner}
