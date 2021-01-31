@@ -49,7 +49,10 @@ function App() {
     url.searchParams.append('type', 'movie');
     url.searchParams.append('s', searchParam.trim());
     setSearching(true);
-    fetch(url)
+
+    const controller = new AbortController();
+
+    fetch(url, { signal: controller.signal })
       .then((response) => {
         if (response.ok) {
           return response.json();
@@ -62,13 +65,21 @@ function App() {
         } else {
           setSearchError(response.Error);
         }
+        setSearching(false);
       })
       .catch((error) => {
-        setSearchError(error.message);
-      })
-      .finally(() => {
-        setSearching(false);
+        if (error instanceof DOMException) {
+          // The request got cancelled.
+          return;
+        } else {
+          setSearchError(error.message);
+          setSearching(false);
+        }
       });
+
+    return () => {
+      controller.abort();
+    };
   }, [searchParam]);
 
   let successBanner;
@@ -93,7 +104,7 @@ function App() {
         >
           Link to Source Code
         </a>
-        <Search setSearchParam={debounce(setSearchParam, 300)}></Search>
+        <Search setSearchParam={debounce(setSearchParam, 100)}></Search>
 
         {successBanner}
 
